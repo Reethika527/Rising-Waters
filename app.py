@@ -1,27 +1,40 @@
 
+
 import streamlit as st
 import pandas as pd
 
 # ---------------- PAGE CONFIG ---------------- #
 st.set_page_config(
-    page_title="Flood Prediction System",
+    page_title="Rising Waters AI",
     page_icon="🌊",
     layout="wide"
 )
 
-# ---------------- CSS ---------------- #
+# ---------------- CUSTOM CSS ---------------- #
 st.markdown("""
 <style>
 
+/* Main Background */
 .stApp {
-    background-color: #eef7ff;
+    background: linear-gradient(to right, #f5fbff, #e3f2fd);
 }
 
-/* Hide Streamlit Menu */
+/* Hide Streamlit Branding */
 #MainMenu {visibility: hidden;}
 footer {visibility: hidden;}
+header {visibility: hidden;}
 
-/* Main Heading */
+/* Fonts */
+html, body, [class*="css"] {
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: linear-gradient(to bottom, #dff6ff, #caf0f8);
+}
+
+/* Main Title */
 .main-title {
     text-align: center;
     font-size: 58px;
@@ -31,8 +44,8 @@ footer {visibility: hidden;}
 
 .sub-title {
     text-align: center;
-    color: #0077b6;
     font-size: 22px;
+    color: #0077b6;
     margin-bottom: 30px;
 }
 
@@ -42,24 +55,31 @@ footer {visibility: hidden;}
     padding: 25px;
     border-radius: 20px;
     text-align: center;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
+    border: 1px solid #d6f0ff;
+}
+
+.card h1 {
+    margin: 0;
+}
+
+.card p {
+    color: gray;
 }
 
 /* Input Container */
-.input-box {
+.input-container {
     background: white;
     padding: 30px;
     border-radius: 20px;
-    box-shadow: 0px 4px 12px rgba(0,0,0,0.08);
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
 }
 
-/* Result Box */
-.result-box {
-    padding: 25px;
-    border-radius: 18px;
-    text-align: center;
-    font-size: 32px;
-    font-weight: bold;
+/* Input Boxes */
+.stTextInput input {
+    border-radius: 12px;
+    border: 2px solid #90e0ef;
+    height: 45px;
 }
 
 /* Button */
@@ -74,27 +94,59 @@ footer {visibility: hidden;}
     font-weight: bold;
 }
 
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background-color: #dff6ff;
+/* Result Box */
+.result-high {
+    background: #ffccd5;
+    color: #c1121f;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+.result-low {
+    background: #d8f3dc;
+    color: #2d6a4f;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    font-size: 30px;
+    font-weight: bold;
+}
+
+/* Footer */
+.footer {
+    text-align: center;
+    color: #0077b6;
+    font-size: 15px;
 }
 
 </style>
 """, unsafe_allow_html=True)
 
 # ---------------- SIDEBAR ---------------- #
-st.sidebar.title("🌊 Rising Waters")
+st.sidebar.title("🌊 Rising Waters AI")
 
-st.sidebar.info("""
-AI-powered Flood Prediction System
+st.sidebar.markdown("""
+### Smart Flood Monitoring Dashboard
 
-Technologies Used:
+AI-powered flood prediction system using environmental conditions and machine learning algorithms.
+
+### Technologies
 - Python
 - Streamlit
 - Machine Learning
+- Data Analytics
+
+### Algorithms
+- Decision Tree
+- Random Forest
+- KNN
+- XGBoost
 """)
 
-st.sidebar.success("System Active")
+st.sidebar.success("🟢 System Status : ACTIVE")
 
 # ---------------- HEADER ---------------- #
 st.markdown(
@@ -103,7 +155,7 @@ st.markdown(
 )
 
 st.markdown(
-    '<div class="sub-title">AI-powered flood risk monitoring dashboard</div>',
+    '<div class="sub-title">AI-powered flood risk prediction and environmental analytics dashboard</div>',
     unsafe_allow_html=True
 )
 
@@ -149,7 +201,7 @@ with col4:
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ---------------- INPUT SECTION ---------------- #
-st.markdown('<div class="input-box">', unsafe_allow_html=True)
+st.markdown('<div class="input-container">', unsafe_allow_html=True)
 
 st.subheader("📋 Enter Environmental Parameters")
 
@@ -158,19 +210,19 @@ col1, col2, col3 = st.columns(3)
 with col1:
     rainfall = st.text_input(
         "Rainfall (mm)",
-        placeholder="Enter rainfall in mm"
+        placeholder="Enter rainfall value"
     )
 
 with col2:
     temperature = st.text_input(
         "Temperature (°C)",
-        placeholder="Enter temperature"
+        placeholder="Enter temperature value"
     )
 
 with col3:
     humidity = st.text_input(
         "Humidity (%)",
-        placeholder="Enter humidity"
+        placeholder="Enter humidity value"
     )
 
 st.markdown("<br>", unsafe_allow_html=True)
@@ -179,27 +231,37 @@ st.markdown("<br>", unsafe_allow_html=True)
 if st.button("🚀 Predict Flood Risk"):
 
     try:
+
         rainfall = float(rainfall)
         temperature = float(temperature)
         humidity = float(humidity)
 
         risk_score = (rainfall * 0.5) + (humidity * 0.4) - (temperature * 0.2)
 
+        # ---------------- RESULT ---------------- #
         if risk_score > 100:
 
             st.markdown("""
-            <div class="result-box" style="background:#ffccd5;color:#c1121f;">
-                ⚠️ HIGH FLOOD RISK
+            <div class="result-high">
+                ⚠️ HIGH FLOOD RISK DETECTED
             </div>
             """, unsafe_allow_html=True)
+
+            st.error(
+                "Emergency response teams should initiate precautionary measures immediately."
+            )
 
         else:
 
             st.markdown("""
-            <div class="result-box" style="background:#d8f3dc;color:#2d6a4f;">
+            <div class="result-low">
                 ✅ LOW FLOOD RISK
             </div>
             """, unsafe_allow_html=True)
+
+            st.success(
+                "Current environmental conditions indicate low flood probability."
+            )
 
         st.markdown("<br>", unsafe_allow_html=True)
 
@@ -207,39 +269,49 @@ if st.button("🚀 Predict Flood Risk"):
         col1, col2, col3 = st.columns(3)
 
         with col1:
-            st.metric("Flood Risk Score", f"{min(int(risk_score),100)}%")
+            st.metric(
+                "📈 Flood Risk Score",
+                f"{min(int(risk_score),100)}%"
+            )
 
         with col2:
             if risk_score > 100:
-                st.metric("Alert Level", "HIGH")
+                st.metric("🚨 Alert Level", "HIGH")
             else:
-                st.metric("Alert Level", "LOW")
+                st.metric("🟢 Alert Level", "LOW")
 
         with col3:
-            st.metric("Region Status", "MONITORED")
+            st.metric("🌍 Region Status", "MONITORED")
 
         st.markdown("<br>", unsafe_allow_html=True)
 
         # ---------------- CHART ---------------- #
         data = pd.DataFrame({
-            "Factors": ["Rainfall", "Temperature", "Humidity"],
-            "Values": [rainfall, temperature, humidity]
+            "Environmental Factors": [
+                "Rainfall",
+                "Temperature",
+                "Humidity"
+            ],
+            "Values": [
+                rainfall,
+                temperature,
+                humidity
+            ]
         })
 
         st.subheader("📊 Environmental Analysis")
 
-        st.bar_chart(data.set_index("Factors"))
+        st.bar_chart(data.set_index("Environmental Factors"))
 
     except:
         st.error("Please enter valid numeric values.")
 
-st.markdown('</div>', unsafe_allow_html=True)
+st.markdown("</div>", unsafe_allow_html=True)
 
 # ---------------- FOOTER ---------------- #
 st.markdown("<br>", unsafe_allow_html=True)
 
-st.markdown("""
-<center>
-Developed using Streamlit | Machine Learning Internship Project
-</center>
-""", unsafe_allow_html=True)
+st.markdown(
+    '<div class="footer">Developed using Streamlit | Final Year Internship Project</div>',
+    unsafe_allow_html=True
+)
