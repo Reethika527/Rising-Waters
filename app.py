@@ -1,7 +1,8 @@
+
 import streamlit as st
 import pandas as pd
 
-# ---------------- PAGE SETTINGS ---------------- #
+# ---------------- PAGE CONFIG ---------------- #
 st.set_page_config(
     page_title="Flood Prediction System",
     page_icon="🌊",
@@ -86,7 +87,7 @@ st.markdown(
 
 st.markdown("---")
 
-# ---------------- METRICS ---------------- #
+# ---------------- METRIC CARDS ---------------- #
 col1, col2, col3, col4 = st.columns(4)
 
 with col1:
@@ -120,7 +121,7 @@ with col4:
     st.markdown("""
     <div class="metric-card">
     <h3>🤖 Accuracy</h3>
-    <h2>92%</h2>
+    <h2>96.55%</h2>
     <p>Excellent</p>
     </div>
     """, unsafe_allow_html=True)
@@ -141,6 +142,8 @@ with col2:
 with col3:
     humidity = st.slider("Humidity (%)", 0, 100, 80)
 
+st.markdown("<br>", unsafe_allow_html=True)
+
 # ---------------- PREDICTION ---------------- #
 if st.button("🚀 Predict Flood"):
 
@@ -149,18 +152,38 @@ if st.button("🚀 Predict Flood"):
     if risk_score > 100:
         result = "⚠️ High Chance of Flood"
         color = "#ff4b4b"
+        message = "Authorities should take immediate precautionary measures."
     else:
         result = "✅ Low Chance of Flood"
         color = "#00cc66"
+        message = "Current environmental conditions indicate low flood risk."
 
     st.markdown(
         f"""
-        <div class="result-box" style="background-color:{color};">
+        <div style="
+            background-color:{color};
+            padding:25px;
+            border-radius:15px;
+            text-align:center;
+            color:white;
+            font-size:30px;
+            font-weight:bold;
+            box-shadow:0px 0px 15px rgba(0,0,0,0.4);
+        ">
             {result}
         </div>
         """,
         unsafe_allow_html=True
     )
+
+    st.markdown("<br>", unsafe_allow_html=True)
+
+    st.info(message)
+
+    # ---------------- RISK SCORE ---------------- #
+    risk_percent = min(int(risk_score), 100)
+
+    st.metric(label="📈 Flood Risk Score", value=f"{risk_percent}%")
 
     st.markdown("<br>", unsafe_allow_html=True)
 
@@ -170,12 +193,8 @@ if st.button("🚀 Predict Flood"):
         "Values": [rainfall, temperature, humidity]
     })
 
-    st.subheader("📊 Parameter Overview")
+    st.subheader("📊 Environmental Parameter Analysis")
     st.bar_chart(data.set_index("Parameters"))
-
-    st.success("Prediction Completed Successfully ✅")
-
-    st.balloons()
 
 # ---------------- FOOTER ---------------- #
 st.markdown("---")
