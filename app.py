@@ -4,7 +4,7 @@ import pandas as pd
 
 app = Flask(__name__)
 
-model = joblib.load('floods.save')
+model = joblib.load('model.pkl')
 scaler = joblib.load('transform.save')
 
 @app.route('/')
