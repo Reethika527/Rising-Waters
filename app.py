@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 
@@ -14,7 +15,7 @@ st.markdown("""
 
 /* Background */
 .stApp {
-    background: linear-gradient(to right, #f8fdff, #eaf6ff);
+    background: linear-gradient(to right, #f4fbff, #e3f2fd);
 }
 
 /* Hide Streamlit Branding */
@@ -29,32 +30,32 @@ html, body, [class*="css"] {
 
 /* Sidebar */
 section[data-testid="stSidebar"] {
-    background: #eef8ff;
+    background: linear-gradient(to bottom, #dff6ff, #caf0f8);
 }
 
 /* Cards */
 .card {
     background: white;
-    padding: 22px;
-    border-radius: 18px;
+    padding: 25px;
+    border-radius: 20px;
     box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
     text-align: center;
     border: 1px solid #edf2f4;
 }
 
-/* Input Box */
+/* Input Container */
 .input-container {
     background: white;
     padding: 30px;
-    border-radius: 18px;
+    border-radius: 20px;
     box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
 }
 
-/* Inputs */
+/* Input Boxes */
 .stTextInput input {
     border-radius: 12px;
-    border: 2px solid #d9edff;
-    height: 48px;
+    border: 2px solid #90e0ef;
+    height: 50px;
 }
 
 /* Button */
@@ -63,23 +64,13 @@ section[data-testid="stSidebar"] {
     height: 55px;
     border-radius: 12px;
     border: none;
-    background: linear-gradient(to right, #2196f3, #1565c0);
+    background: linear-gradient(to right, #00b4d8, #0077b6);
     color: white;
     font-size: 22px;
     font-weight: bold;
 }
 
-/* Result */
-.low-risk {
-    background: #e8fff1;
-    color: #2d6a4f;
-    padding: 25px;
-    border-radius: 15px;
-    font-size: 30px;
-    font-weight: bold;
-    text-align:center;
-}
-
+/* Result Box */
 .high-risk {
     background: #ffe5e5;
     color: #c1121f;
@@ -90,10 +81,20 @@ section[data-testid="stSidebar"] {
     text-align:center;
 }
 
+.low-risk {
+    background: #d8f3dc;
+    color: #2d6a4f;
+    padding: 25px;
+    border-radius: 15px;
+    font-size: 30px;
+    font-weight: bold;
+    text-align:center;
+}
+
 /* Metric Box */
 .metric-box {
     background: white;
-    padding: 18px;
+    padding: 20px;
     border-radius: 15px;
     text-align: center;
     box-shadow: 0px 3px 10px rgba(0,0,0,0.06);
@@ -126,29 +127,31 @@ AI-powered flood prediction system using environmental and weather conditions.
 st.sidebar.success("🟢 System Status : ACTIVE")
 
 # ---------------- HEADER ---------------- #
-
 st.markdown("""
 <div style='display:flex; align-items:center; gap:25px;'>
 
 <img src='https://cdn-icons-png.flaticon.com/512/4149/4149684.png'
-width='160'>
+width='140'>
 
 <div>
-    <h1 style='
-        color:#023e8a;
-        font-size:60px;
-        margin-bottom:0px;
-    '>
-        Flood Prediction System
-    </h1>
 
-    <p style='
-        color:#5c677d;
-        font-size:22px;
-        margin-top:0px;
-    '>
-        AI-powered flood risk prediction and environmental analytics dashboard
-    </p>
+<h1 style='
+color:#023e8a;
+font-size:58px;
+margin-bottom:0px;
+font-weight:bold;
+'>
+Flood Prediction System
+</h1>
+
+<p style='
+color:#5c677d;
+font-size:22px;
+margin-top:0px;
+'>
+AI-powered flood risk prediction and environmental analytics dashboard
+</p>
+
 </div>
 
 </div>
@@ -263,11 +266,14 @@ if st.button("🚀 Predict Flood Risk"):
             st.markdown(f"""
             <div class="metric-box">
                 <h3>📈 Flood Risk Score</h3>
-                <h1 style='color:#0077b6;'>{min(int(risk_score),100)}%</h1>
+                <h1 style='color:#0077b6;'>
+                    {min(int(risk_score),100)}%
+                </h1>
             </div>
             """, unsafe_allow_html=True)
 
         with m2:
+
             if risk_score > 100:
                 alert = "HIGH"
                 color = "#c1121f"
@@ -278,7 +284,9 @@ if st.button("🚀 Predict Flood Risk"):
             st.markdown(f"""
             <div class="metric-box">
                 <h3>🚨 Alert Level</h3>
-                <h1 style='color:{color};'>{alert}</h1>
+                <h1 style='color:{color};'>
+                    {alert}
+                </h1>
             </div>
             """, unsafe_allow_html=True)
 
@@ -286,7 +294,9 @@ if st.button("🚀 Predict Flood Risk"):
             st.markdown("""
             <div class="metric-box">
                 <h3>🌍 Region Status</h3>
-                <h1 style='color:#8338ec;'>MONITORED</h1>
+                <h1 style='color:#8338ec;'>
+                    MONITORED
+                </h1>
             </div>
             """, unsafe_allow_html=True)
 
