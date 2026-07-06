@@ -1,44 +1,16 @@
-from flask import Flask, render_template, request
-import joblib
-import pandas as pd
+import streamlit as st
 
-app = Flask(__name__)
+st.title("Flood Prediction System")
 
-model = joblib.load('model.pkl')
-scaler = joblib.load('transform.save')
+rainfall = st.number_input("Enter Rainfall (mm)")
 
-@app.route('/')
-def home():
-    return render_template('home.html')
+temperature = st.number_input("Enter Temperature")
 
-@app.route('/Predict')
-def Predict():
-    return render_template('index.html')
+humidity = st.number_input("Enter Humidity")
 
-@app.route('/predict', methods=['POST'])
-def predict():
+if st.button("Predict Flood"):
 
-    temp = float(request.form['Temp'])
-    humidity = float(request.form['Humidity'])
-    cloud = float(request.form['Cloud'])
-    annual = float(request.form['Annual'])
-    rainfall = float(request.form['Rainfall'])
-
-    data = pd.DataFrame([[temp, humidity, cloud, annual,
-                          100, 200, rainfall, 150, 120, 1]],
-    columns=['Temp','Humidity','Cloud Cover','ANNUAL',
-             'Jan-Feb','Mar-May','Jun-Sep',
-             'Oct-Dec','avgjune','sub'])
-
-    data = scaler.transform(data)
-
-    prediction = model.predict(data)
-
-    if prediction[0] == 1:
-        return render_template('chance.html')
-
+    if rainfall > 100 and humidity > 70:
+        st.error("High Chance of Flood")
     else:
-        return render_template('no_chance.html')
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5001)
+        st.success("Low Chance of Flood")
