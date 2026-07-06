@@ -1,7 +1,6 @@
 
 import streamlit as st
 import pandas as pd
-from datetime import datetime
 
 # ---------------- PAGE CONFIG ---------------- #
 st.set_page_config(
@@ -10,87 +9,109 @@ st.set_page_config(
     layout="wide"
 )
 
-# ---------------- SEA BLUE THEME ---------------- #
+# ---------------- CUSTOM CSS ---------------- #
 st.markdown("""
 <style>
 
 .stApp {
-    background: linear-gradient(to right, #001f3f, #005f99, #00a8cc);
-    color: white;
+    background-color: #f4fbff;
 }
 
 html, body, [class*="css"] {
     font-family: 'Segoe UI', sans-serif;
+    color: #003566;
 }
+
+/* Sidebar */
+
+section[data-testid="stSidebar"] {
+    background: linear-gradient(to bottom, #dff6ff, #caf0f8);
+}
+
+/* Header */
 
 .main-title {
     font-size: 60px;
     font-weight: bold;
+    color: #023e8a;
     text-align: center;
-    color: white;
 }
 
 .sub-title {
     text-align: center;
     font-size: 22px;
-    color: #dff6ff;
+    color: #0077b6;
 }
 
+/* Cards */
+
 .card {
-    background: rgba(255,255,255,0.12);
+    background: white;
     padding: 25px;
     border-radius: 18px;
     text-align: center;
-    box-shadow: 0px 0px 20px rgba(0,0,0,0.3);
+    box-shadow: 0px 4px 15px rgba(0,0,0,0.08);
+    border: 2px solid #dff6ff;
 }
 
 .card h1 {
-    color: #caf0f8;
+    color: #0077b6;
 }
 
 .card p {
-    color: #f1faff;
+    color: #555;
 }
+
+/* Input Boxes */
+
+.stNumberInput input {
+    background-color: white !important;
+    border-radius: 10px !important;
+    border: 2px solid #90e0ef !important;
+    height: 45px;
+}
+
+/* Button */
 
 .stButton>button {
     width: 100%;
-    height: 60px;
-    border-radius: 15px;
+    height: 55px;
+    border-radius: 12px;
     border: none;
-    background: linear-gradient(to right, #00c6ff, #0072ff);
+    background: linear-gradient(to right, #00b4d8, #0077b6);
     color: white;
-    font-size: 24px;
+    font-size: 22px;
     font-weight: bold;
 }
 
+/* Result */
+
 .high-risk {
-    background: linear-gradient(to right, #ff4d6d, #c9184a);
-    padding: 30px;
-    border-radius: 18px;
+    background: #ffccd5;
+    padding: 25px;
+    border-radius: 15px;
     text-align: center;
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
-    color: white;
+    color: #c1121f;
 }
 
 .low-risk {
-    background: linear-gradient(to right, #00b4d8, #0096c7);
-    padding: 30px;
-    border-radius: 18px;
+    background: #d8f3dc;
+    padding: 25px;
+    border-radius: 15px;
     text-align: center;
-    font-size: 35px;
+    font-size: 30px;
     font-weight: bold;
-    color: white;
+    color: #2d6a4f;
 }
+
+/* Footer */
 
 .footer {
     text-align:center;
-    color:#dff6ff;
+    color:#0077b6;
     font-size:15px;
-}
-
-section[data-testid="stSidebar"] {
-    background: linear-gradient(to bottom, #001d3d, #003566);
 }
 
 </style>
@@ -100,27 +121,27 @@ section[data-testid="stSidebar"] {
 st.sidebar.title("🌊 Rising Waters AI")
 
 st.sidebar.markdown("""
-### Smart Flood Monitoring Dashboard
+### Smart Flood Monitoring System
 
-AI-powered flood prediction system developed using Machine Learning algorithms.
+AI-powered flood prediction dashboard using environmental parameters.
 
-### Technologies Used
-- Streamlit
-- Python
-- Machine Learning
-- Data Analytics
+### Features
+✅ Real-time Prediction  
+✅ Risk Analysis  
+✅ Environmental Monitoring  
+✅ AI-Based System  
 """)
 
-st.sidebar.success("🟢 System Status : ACTIVE")
+st.sidebar.success("🟢 System Active")
 
 # ---------------- HEADER ---------------- #
 st.markdown(
-    '<p class="main-title">🌊 Flood Prediction System</p>',
+    '<p class="main-title">Flood Prediction System</p>',
     unsafe_allow_html=True
 )
 
 st.markdown(
-    '<p class="sub-title">AI-powered flood risk prediction and environmental analytics dashboard</p>',
+    '<p class="sub-title">AI-powered flood risk prediction and environmental monitoring dashboard</p>',
     unsafe_allow_html=True
 )
 
@@ -173,13 +194,28 @@ st.subheader("📋 Enter Environmental Parameters")
 col1, col2, col3 = st.columns(3)
 
 with col1:
-    rainfall = st.slider("Rainfall (mm)", 0, 500, 120)
+    rainfall = st.number_input(
+        "Rainfall (mm)",
+        min_value=0,
+        max_value=500,
+        value=120
+    )
 
 with col2:
-    temperature = st.slider("Temperature (°C)", 0, 50, 28)
+    temperature = st.number_input(
+        "Temperature (°C)",
+        min_value=0,
+        max_value=50,
+        value=28
+    )
 
 with col3:
-    humidity = st.slider("Humidity (%)", 0, 100, 80)
+    humidity = st.number_input(
+        "Humidity (%)",
+        min_value=0,
+        max_value=100,
+        value=80
+    )
 
 st.markdown("<br>", unsafe_allow_html=True)
 
@@ -197,7 +233,7 @@ if st.button("🚀 Predict Flood Risk"):
         """, unsafe_allow_html=True)
 
         st.error(
-            "Emergency response teams are advised to initiate precautionary measures immediately."
+            "Emergency response teams should take precautionary measures immediately."
         )
 
     else:
@@ -247,13 +283,9 @@ if st.button("🚀 Predict Flood Risk"):
         ]
     })
 
-    st.subheader("📊 Environmental Analytics")
+    st.subheader("📊 Environmental Analysis")
 
     st.bar_chart(data.set_index("Environmental Factors"))
-
-    st.info(
-        "Prediction generated successfully using AI-powered flood analysis system."
-    )
 
 # ---------------- FOOTER ---------------- #
 st.markdown("---")
