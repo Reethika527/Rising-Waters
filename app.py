@@ -22,14 +22,14 @@ st.markdown("""
 footer {visibility: hidden;}
 header {visibility: hidden;}
 
-/* Sidebar */
-section[data-testid="stSidebar"] {
-    background: #eef8ff;
-}
-
 /* Fonts */
 html, body, [class*="css"] {
     font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar */
+section[data-testid="stSidebar"] {
+    background: #eef8ff;
 }
 
 /* Cards */
@@ -42,11 +42,7 @@ html, body, [class*="css"] {
     border: 1px solid #edf2f4;
 }
 
-.card h1 {
-    margin: 0;
-}
-
-/* Input Container */
+/* Input Box */
 .input-container {
     background: white;
     padding: 30px;
@@ -81,6 +77,7 @@ html, body, [class*="css"] {
     border-radius: 15px;
     font-size: 30px;
     font-weight: bold;
+    text-align:center;
 }
 
 .high-risk {
@@ -90,8 +87,10 @@ html, body, [class*="css"] {
     border-radius: 15px;
     font-size: 30px;
     font-weight: bold;
+    text-align:center;
 }
 
+/* Metric Box */
 .metric-box {
     background: white;
     padding: 18px;
