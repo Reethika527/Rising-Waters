@@ -43,10 +43,8 @@ RISING-WATERS/
 python3 app.py
 
 3. Open browser:
-http://127.0.0.1:5001
+4. https://rising-waters-gqomaumwjwakrpwgnyhviy.streamlit.app/
 
 ## Output
 The system predicts whether flood chances are present or not based on weather conditions.
 
-## Author
-Reethika
