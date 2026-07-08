@@ -52,6 +52,5 @@ screenshots/img1.png
 ## Output
 The system predicts whether flood chances are present or not based on weather conditions.
 
-screenshots/img1.png
-screenshots/img2.png
+
 
